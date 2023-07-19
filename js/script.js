@@ -91,3 +91,60 @@ posts.forEach(element => {
     </div>            
 </div> `
 });
+
+
+
+
+// seleziono tutti i button dei post 
+const btnLike = document.querySelectorAll(".js-like-button");
+// console.log(btnLike);
+
+// creo un array da popolare con gli id dei post dove ho messo like 
+let likesArray = []
+
+// creo cilo for each per selezionare ogni button 
+btnLike.forEach((element) => {
+
+    // creo un contatore che sia equivalente al id dei post 
+    const counter = element.getAttribute("data-postid")
+
+        // seleziono il counter che corrisponde all'id 
+        const likeCounter = document.getElementById(`like-counter-${counter}`)
+
+        // creo oggetto con proprietà id da aggiungere all' array ogni volta che clicco su like
+        let newObject = { id: counter };
+
+    //  creo evento al click quando clicco sul bottone like 
+    element.addEventListener("click", 
+    function () {
+        
+        
+        // creo condizione al click sul button like 
+        if (element.classList.contains("like-button-liked")) { //se l'elemeno è liked(già cliccato)classe
+            element.classList.remove("like-button-liked") //rimuovi classe
+
+            //  tolgo li like dal contatore 
+            likeCounter.innerHTML = parseInt(likeCounter.innerHTML) - 1;
+
+            // tolgo id da array 
+            likesArray = likesArray.filter(
+                function (object) {
+                    return object.id !== counter;
+
+                }
+            )
+            // Altrimenti 
+        } else {
+            // aggiungo classe al click 
+            element.classList.add("like-button-liked")
+            // aggiungo like al counter 
+            likeCounter.innerHTML = parseInt(likeCounter.innerHTML) + 1;
+
+            // pusho id nell'array
+            likesArray.push(newObject)
+
+        }
+        console.log(likesArray);
+    });
+});
+
